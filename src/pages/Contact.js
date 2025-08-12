@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Facebook, Instagram, Youtube, Twitter, Linkedin } from 'lucide-react';
+import TikTokIcon from '../components/icons/TikTokIcon';
+import WhatsAppIcon from '../components/icons/WhatsAppIcon';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +10,17 @@ const Contact = () => {
     email: '',
     message: '',
   });
+
+  const socialLinks = [
+    { name: 'Facebook', icon: Facebook, url: 'https://www.facebook.com/share/16sHytUGPq/' },
+    { name: 'Instagram', icon: Instagram, url: 'https://www.instagram.com/iqgeospatial?igsh=MTBxbmhzbHY4dXF1aw==' },
+    { name: 'YouTube', icon: Youtube, url: 'https://www.youtube.com/channel/UCoUSMTRIKwvX1mIT8Tfz2eA' },
+    { name: 'TikTok', icon: TikTokIcon, url: 'https://tiktok.com/@iq.geospatial' },
+    { name: 'WhatsApp', icon: WhatsAppIcon, url: 'https://wa.me/51900102921' },
+    { name: 'Twitter', icon: Twitter, url: 'https://twitter.com/tu-usuario' },
+    { name: 'LinkedIn', icon: Linkedin, url: 'https://linkedin.com/in/tu-usuario' },
+    { name: 'Email', icon: Mail, url: 'mailto:info@iqgeospatial.com' },
+  ];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,7 +65,7 @@ const Contact = () => {
             </div>
             <div>
               <h3 className="text-xl font-semibold text-gray-800">Correo Electrónico</h3>
-              <p className="text-gray-600">info@iqgeospatial.com</p>
+              <p className="text-gray-600">iqgeospatial@gmail.com</p>
             </div>
           </div>
 
@@ -62,7 +75,7 @@ const Contact = () => {
             </div>
             <div>
               <h3 className="text-xl font-semibold text-gray-800">Teléfono</h3>
-              <p className="text-gray-600">+1 (555) 123-4567</p>
+              <p className="text-gray-600">(+51) 900 102 921</p>
             </div>
           </div>
 
@@ -72,7 +85,7 @@ const Contact = () => {
             </div>
             <div>
               <h3 className="text-xl font-semibold text-gray-800">Oficina Principal</h3>
-              <p className="text-gray-600">123 Calle Geo, Ciudad Espacial, País</p>
+              <p className="text-gray-600">Psje. Los claveles, La Merced, Perú</p>
             </div>
           </div>
 
@@ -83,19 +96,19 @@ const Contact = () => {
             className="mt-8"
           >
             <h2 className="text-2xl font-bold text-gray-800 mb-4">Síguenos en Redes Sociales</h2>
-            <div className="flex gap-4">
-              {/* Aquí podrías añadir iconos de redes sociales */}
-              <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors duration-300">
-                <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
-                </svg>
-              </a>
-              <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors duration-300">
-                <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path fillRule="evenodd" d="M12.315 2c2.43 0 2.784.002 3.714.051 1.05.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 011.153 1.772c.248.638.415 1.378.465 2.428.049.93.051 1.286.051 3.714s-.002 2.784-.051 3.714c-.05.1.217 1.79-.465 2.428a4.908 4.908 0 01-1.153 1.772c-.254.66-.598 1.216-1.153 1.772a4.908 4.908 0 01-1.772 1.153c-.638.248-1.378.415-2.428.465-.93.049-1.286.051-3.714.051s-2.784-.002-3.714-.051c-1.05-.05-1.79-.217-2.428-.465a4.908 4.908 0 01-1.772-1.153c-.66-.254-1.216-.598-1.772-1.153a4.908 4.908 0 01-1.153-1.772c-.248-.638-.415-1.378-.465-2.428-.049-.93-.051-1.286-.051-3.714s.002-2.784.051-3.714c.05-1.05.217-1.79.465-2.428a4.908 4.908 0 011.153-1.772c.254-.66.598-1.216 1.153-1.772A4.908 4.908 0 015.636 2.465c.638-.248 1.378-.415 2.428-.465C9.047 2.002 9.401 2 12.315 2zm0 2.16c-2.727 0-3.064.003-4.122.056-.95.046-1.58.19-2.097.387a2.17 2.17 0 00-1.173.865 2.17 2.17 0 00-.865 1.173c-.197.517-.341 1.147-.387 2.097-.053 1.058-.056 1.395-.056 4.122s.003 3.064.056 4.122c.046.95.19 1.58.387 2.097a2.17 2.17 0 00.865 1.173c.517.197 1.147.341 2.097.387 1.058.053 1.395.056 4.122.056s3.064-.003 4.122-.056c.95-.046 1.58-.19 2.097-.387a2.17 2.17 0 001.173-.865 2.17 2.17 0 00.865-1.173c.197-.517.341-1.147.387-2.097.053-1.058.056-1.395.056-4.122s-.003-3.064-.056-4.122c-.046-.95-.19-1.58-.387-2.097a2.17 2.17 0 00-.865-1.173 2.17 2.17 0 00-1.173-.865c-.517-.197-1.147-.341-2.097-.387C15.376 4.163 15.039 4.16 12.315 4.16zm0 1.868c3.432 0 6.218 2.786 6.218 6.218S15.747 18.464 12.315 18.464 6.097 15.678 6.097 12.246s2.786-6.218 6.218-6.218zm0 2.16a4.058 4.058 0 100 8.116 4.058 4.058 0 000-8.116z" clipRule="evenodd" />
-                </svg>
-              </a>
-              {/* Añade más iconos según necesites */}
+            <div className="flex flex-wrap gap-4">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.name}
+                  className="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+                >
+                  <social.icon size={32} />
+                </a>
+              ))}
             </div>
           </motion.div>
         </motion.div>

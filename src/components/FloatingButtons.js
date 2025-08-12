@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion'; // Importar AnimatePresence
-import { MessageSquare, MessageCircle, Facebook, Instagram, Youtube, X } from 'lucide-react';
+import { MessageSquare, Facebook, Instagram, X } from 'lucide-react';
+import TikTokIcon from './icons/TikTokIcon'; // Importar el nuevo icono
+import WhatsAppIcon from './icons/WhatsAppIcon'; // Importar el icono de WhatsApp
 
 const FloatingButtons = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   const socialLinks = [
-    { icon: MessageCircle, color: 'bg-green-500', hoverColor: 'hover:bg-green-600', link: 'https://wa.me/tunumerodetelefono' },
-    { icon: Facebook, color: 'bg-blue-600', hoverColor: 'hover:bg-blue-700', link: 'https://facebook.com/tuusuario' },
-    { icon: Instagram, color: 'bg-pink-500', hoverColor: 'hover:bg-pink-600', link: 'https://instagram.com/tuusuario' },
-    { icon: X, color: 'bg-blue-400', hoverColor: 'hover:bg-blue-500', link: 'https://twitter.com/tuusuario' },
-    { icon: Youtube, color: 'bg-red-600', hoverColor: 'hover:bg-red-700', link: 'https://youtube.com/tuusuario' },
+    { name: 'WhatsApp', icon: WhatsAppIcon, color: 'bg-green-500', hoverColor: 'hover:bg-green-600', link: 'https://wa.me/51900102921' },
+    { name: 'Facebook', icon: Facebook, color: 'bg-blue-600', hoverColor: 'hover:bg-blue-700', link: 'https://www.facebook.com/share/16sHytUGPq/' },
+    { name: 'Instagram', icon: Instagram, color: 'bg-pink-500', hoverColor: 'hover:bg-pink-600', link: 'https://www.instagram.com/iqgeospatial?igsh=MTBxbmhzbHY4dXF1aw==' },
+    { name: 'TikTok', icon: TikTokIcon, color: 'bg-black', hoverColor: 'hover:bg-gray-800', link: 'https://tiktok.com/@iq.geospatial' },
   ];
 
   const buttonVariants = {
@@ -29,47 +29,31 @@ const FloatingButtons = () => {
   return (
     <>
       {/* Botones Flotantes de Redes Sociales */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end space-y-3">
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              variants={{
-                visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
-                hidden: { transition: { staggerChildren: 0.05, staggerDirection: -1 } },
-              }}
-              className="flex flex-col space-y-3"
-            >
-              {socialLinks.map((item, index) => (
-                <motion.a
-                  key={index}
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`w-12 h-12 rounded-full flex items-center justify-center text-white shadow-lg ${item.color} ${item.hoverColor}`}
-                  variants={itemVariants}
-                  whileHover="hover"
-                  whileTap="tap"
-                >
-                  <item.icon size={24} />
-                </motion.a>
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        <motion.button
-          className="w-14 h-14 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-xl flex items-center justify-center"
-          variants={buttonVariants}
-          initial="visible"
-          whileHover="hover"
-          whileTap="tap"
-          onClick={() => setIsOpen(!isOpen)}
+      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end space-y-3">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
+          }}
+          className="flex flex-col space-y-3"
         >
-          <MessageSquare size={28} />
-        </motion.button>
+          {socialLinks.map((item, index) => (
+            <motion.a
+              key={index}
+              href={item.link}
+              target="_blank"
+              aria-label={item.name}
+              rel="noopener noreferrer"
+              className={`w-12 h-12 rounded-full flex items-center justify-center text-white shadow-lg ${item.color} ${item.hoverColor}`}
+              variants={itemVariants}
+              whileHover="hover"
+              whileTap="tap"
+            >
+              <item.icon size={24} />
+            </motion.a>
+          ))}
+        </motion.div>
       </div>
 
       {/* Chatbot Flotante (Placeholder) */}

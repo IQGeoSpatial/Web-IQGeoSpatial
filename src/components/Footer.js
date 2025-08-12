@@ -1,10 +1,23 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Map, Globe, Mail, Phone, Facebook, Twitter, Linkedin } from 'lucide-react';
+import { Map, Mail, Phone, Facebook, Twitter, Linkedin, Youtube, Instagram } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import TikTokIcon from './icons/TikTokIcon'; // Importar el nuevo icono
+import WhatsAppIcon from './icons/WhatsAppIcon'; // Importar el icono de WhatsApp
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+
+  const socialLinks = [
+    { name: 'Facebook', icon: Facebook, url: 'https://www.facebook.com/share/16sHytUGPq/' },
+    { name: 'Instagram', icon: Instagram, url: 'https://www.instagram.com/iqgeospatial?igsh=MTBxbmhzbHY4dXF1aw==' },
+    { name: 'YouTube', icon: Youtube, url: 'https://www.youtube.com/channel/UCoUSMTRIKwvX1mIT8Tfz2eA' },
+    { name: 'TikTok', icon: TikTokIcon, url: 'https://tiktok.com/@iq.geospatial' },
+    { name: 'WhatsApp', icon: WhatsAppIcon, url: 'https://wa.me/51900102921' },
+    { name: 'Twitter', icon: Twitter, url: 'https://twitter.com/tu-usuario' },
+    { name: 'LinkedIn', icon: Linkedin, url: 'https://linkedin.com/in/tu-usuario' },
+    { name: 'Email', icon: Mail, url: 'mailto:info@iqgeospatial.com' },
+  ];
 
   return (
     <motion.footer
@@ -16,9 +29,9 @@ const Footer = () => {
       <div className="container mx-auto px-4 max-w-7xl grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {/* Columna 1: Logo y Descripción */}
         <div className="col-span-1 md:col-span-1 lg:col-span-1">
-          <Link to="/" className="text-3xl font-bold text-white flex items-center gap-2 mb-4">
-            <span className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-3 py-1 rounded-lg">IQ</span>
-            <span className="hidden sm:block">geoSpatial</span>
+          <Link to="/" className="font-bold text-white flex items-center gap-2 mb-4">
+            <img src='/assets/logo.png' alt='IQ GeoSpatial Logo' className="h-14 w-auto" />
+            <span className="hidden sm:block">IQ GeoSpatial Technology</span>
           </Link>
           <p className="text-gray-400 text-sm leading-relaxed">
             Transformando el mundo con soluciones geoespaciales innovadoras y tecnología de vanguardia.
@@ -47,11 +60,11 @@ const Footer = () => {
             </li>
             <li className="flex items-center gap-2">
               <Phone size={18} className="text-blue-400" />
-              <span>+1 (555) 123-4567</span>
+              <span>(+51) 900 102 921</span>
             </li>
             <li className="flex items-start gap-2">
               <Map size={18} className="text-blue-400 mt-1" />
-              <span>Av. Siempre Viva 742, Springfield, USA</span>
+              <span>Psje. Los claveles, La Merced, Perú</span>
             </li>
           </ul>
         </div>
@@ -60,18 +73,11 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold text-white mb-4">Síguenos</h3>
           <div className="flex space-x-4 mb-6">
-            <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors duration-300">
-              <Facebook size={24} />
-            </a>
-            <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors duration-300">
-              <Twitter size={24} />
-            </a>
-            <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors duration-300">
-              <Linkedin size={24} />
-            </a>
-            <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors duration-300">
-              <Globe size={24} /> {/* Icono genérico para otras plataformas */}
-            </a>
+            {socialLinks.map((social) => (
+              <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer" aria-label={social.name} className="text-gray-400 hover:text-blue-400 transition-colors duration-300">
+                <social.icon size={24} />
+              </a>
+            ))}
           </div>
           {/* <h3 className="text-lg font-semibold text-white mb-4">Newsletter</h3>
           <form className="flex">
@@ -89,7 +95,6 @@ const Footer = () => {
 
       <div className="border-t border-gray-700 mt-10 pt-8 text-center text-gray-500 text-sm">
         <p>&copy; {currentYear} IQ geoSpatial Technology. Todos los derechos reservados.</p>
-        <p className="mt-2">Diseñado con <span className="text-red-500">&hearts;</span> por tu asistente de IA favorito (o sea, yo).</p>
       </div>
     </motion.footer>
   );

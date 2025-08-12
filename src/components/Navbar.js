@@ -10,12 +10,6 @@ const Navbar = () => {
   const [isServicesOpen, setIsServicesOpen] = useState(false); // Estado para el menú de servicios
   const navigate = useNavigate();
 
-  const navLinks = [
-    { name: 'Inicio', path: '/' },
-    { name: 'Nosotros', path: '/about' },
-    { name: 'Contacto', path: '/contact' },
-  ];
-
   const serviceLinks = [
     { name: 'Análisis Espacial', path: '/services#analysis' },
     { name: 'WebGIS', path: '/services#webgis' },
@@ -49,22 +43,19 @@ const Navbar = () => {
       className="bg-white/80 backdrop-blur-lg shadow-md sticky top-0 z-50"
     >
       <div className="container mx-auto px-4 py-4 flex justify-between items-center max-w-7xl">
-        <Link to="/" className="text-2xl font-bold text-blue-800 flex items-center gap-2">
-          <span className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-1 rounded-lg">IQ</span>
-          <span className="hidden sm:block">geoSpatial Technology</span>
+        <Link to="/" className="font-bold text-blue-800 flex items-center gap-2">
+          <img src='/assets/logo.png' alt='IQ GeoSpatial Logo' className="h-[58px] w-auto" />
+          <span className="hidden sm:block text-xl">IQ GeoSpatial Technology</span>
         </Link>
 
         <div className="hidden md:flex items-center space-x-6">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              to={link.path}
-              className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300 relative group"
-            >
-              {link.name}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
-            </Link>
-          ))}
+          <Link
+            to="/"
+            className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300 relative group"
+          >
+            Inicio
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
+          </Link>
 
           {/* Menú desplegable de Servicios */}
           <div
@@ -104,6 +95,21 @@ const Navbar = () => {
             className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300 relative group"
           >
             Software
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
+          </Link>
+
+          <Link
+            to="/about"
+            className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300 relative group"
+          >
+            Nosotros
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
+          </Link>
+          <Link
+            to="/contact"
+            className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300 relative group"
+          >
+            Contacto
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
           </Link>
 
@@ -164,16 +170,13 @@ const Navbar = () => {
         className="md:hidden overflow-hidden"
       >
         <div className="flex flex-col items-center py-4 space-y-4 bg-white/90">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              to={link.path}
-              onClick={() => setIsOpen(false)}
-              className="text-gray-700 hover:text-blue-600 font-medium text-lg py-2 w-full text-center"
-            >
-              {link.name}
-            </Link>
-          ))}
+          <Link
+            to="/"
+            onClick={() => setIsOpen(false)}
+            className="text-gray-700 hover:text-blue-600 font-medium text-lg py-2 w-full text-center"
+          >
+            Inicio
+          </Link>
           {/* Menú desplegable de Servicios para móvil */}
           <div className="w-full text-center">
             <button
@@ -211,6 +214,20 @@ const Navbar = () => {
             className="text-gray-700 hover:text-blue-600 font-medium text-lg py-2 w-full text-center"
           >
             Software
+          </Link>
+          <Link
+            to="/about"
+            onClick={() => setIsOpen(false)}
+            className="text-gray-700 hover:text-blue-600 font-medium text-lg py-2 w-full text-center"
+          >
+            Nosotros
+          </Link>
+          <Link
+            to="/contact"
+            onClick={() => setIsOpen(false)}
+            className="text-gray-700 hover:text-blue-600 font-medium text-lg py-2 w-full text-center"
+          >
+            Contacto
           </Link>
           <div className="flex flex-col items-center gap-4 w-full">
             {authLoading ? (

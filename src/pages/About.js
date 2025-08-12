@@ -35,11 +35,11 @@ const About = () => {
             </div>
             <h2 className="text-3xl font-bold text-gray-800 mb-4">Nuestra Misión</h2>
             <p className="text-lg text-gray-700">
-              Impulsar el progreso y la toma de decisiones inteligentes mediante el desarrollo de soluciones geoespaciales de vanguardia, accesibles y eficientes. Creemos en el poder de la información geográfica para resolver los desafíos más complejos de nuestro planeta.
+              Somos IQ GeoSpatial Technology Labs, una startup dedicada a la innovación geoespacial. Diseñamos soluciones inteligentes que transforman datos territoriales en tecnología aplicable a escala local y global.
             </p>
           </div>
           <div className="md:w-1/2">
-            <img src="https://via.placeholder.com/600x400/ADD8E6/000000?text=Nuestra+Mision" alt="Misión" className="rounded-lg shadow-md" />
+            <img src="/assets/mision.png" alt="Misión" className="rounded-lg shadow-md" />
           </div>
         </motion.section>
 
@@ -55,11 +55,11 @@ const About = () => {
             </div>
             <h2 className="text-3xl font-bold text-gray-800 mb-4">Nuestra Visión</h2>
             <p className="text-lg text-gray-700">
-              Ser líderes en la industria geoespacial, reconocidos por nuestra innovación, calidad y el impacto positivo de nuestras soluciones en la sociedad y el medio ambiente. Queremos ser el referente en teledetección, sistemas de información geográfica y geodesia.
+              Ser un referente global en innovación geoespacial, desarrollando tecnologías que transformen la gestión territorial, impulsen decisiones inteligentes y conecten comunidades con soluciones sostenibles y escalables.
             </p>
           </div>
           <div className="md:w-1/2">
-            <img src="https://via.placeholder.com/600x400/90EE90/000000?text=Nuestra+Vision" alt="Visión" className="rounded-lg shadow-md" />
+            <img src="/assets/vision.png" alt="Visión" className="rounded-lg shadow-md" />
           </div>
         </motion.section>
 
@@ -79,18 +79,18 @@ const About = () => {
           {/* Aquí podrías añadir fotos y descripciones de los miembros del equipo */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
             <div className="flex flex-col items-center">
-              <img src="https://via.placeholder.com/150/FFD700/000000?text=Miembro+1" alt="Miembro del equipo" className="w-32 h-32 rounded-full object-cover mb-4 shadow-md" />
-              <h4 className="text-xl font-semibold text-gray-800">Juan Pérez</h4>
+              <img src="/assets/13014933.png" alt="Miembro del equipo" className="w-32 h-32 rounded-full object-cover mb-4 shadow-md" />
+              <h4 className="text-xl font-semibold text-gray-800">Cesar Quintana</h4>
               <p className="text-gray-600">CEO & Fundador</p>
             </div>
             <div className="flex flex-col items-center">
-              <img src="https://via.placeholder.com/150/C0C0C0/000000?text=Miembro+2" alt="Miembro del equipo" className="w-32 h-32 rounded-full object-cover mb-4 shadow-md" />
-              <h4 className="text-xl font-semibold text-gray-800">María García</h4>
+              <img src="/assets/13014933.png" alt="Miembro del equipo" className="w-32 h-32 rounded-full object-cover mb-4 shadow-md" />
+              <h4 className="text-xl font-semibold text-gray-800">Alison Quintana</h4>
               <p className="text-gray-600">CTO</p>
             </div>
             <div className="flex flex-col items-center">
-              <img src="https://via.placeholder.com/150/B0E0E6/000000?text=Miembro+3" alt="Miembro del equipo" className="w-32 h-32 rounded-full object-cover mb-4 shadow-md" />
-              <h4 className="text-xl font-semibold text-gray-800">Carlos Ruiz</h4>
+              <img src="/assets/13014933.png" alt="Miembro del equipo" className="w-32 h-32 rounded-full object-cover mb-4 shadow-md" />
+              <h4 className="text-xl font-semibold text-gray-800">Mia Oxcenford</h4>
               <p className="text-gray-600">Jefe de Desarrollo GIS</p>
             </div>
           </div>
