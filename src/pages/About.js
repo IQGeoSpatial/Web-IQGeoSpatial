@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Users, Rocket, Award, Lightbulb } from 'lucide-react';
+import { supabase } from '../utils/supabaseClient';
 
 const About = () => {
+  const [teamMembers, setTeamMembers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTeamMembers = async () => {
+      setLoading(true);
+      const { data, error } = await supabase.from('team_members').select('*').order('id');
+      if (error) {
+        console.error('Error fetching team members:', error);
+      } else {
+        setTeamMembers(data || []);
+      }
+      setLoading(false);
+    };
+    fetchTeamMembers();
+  }, []);
+
   const sectionVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
@@ -76,24 +94,19 @@ const About = () => {
           <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-8">
             Somos un equipo multidisciplinario de ingenieros, científicos de datos y desarrolladores, unidos por la pasión por la geografía y la tecnología. Nuestra experiencia y creatividad son el motor de cada proyecto.
           </p>
-          {/* Aquí podrías añadir fotos y descripciones de los miembros del equipo */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-            <div className="flex flex-col items-center">
-              <img src="/assets/13014933.png" alt="Miembro del equipo" className="w-32 h-32 rounded-full object-cover mb-4 shadow-md" />
-              <h4 className="text-xl font-semibold text-gray-800">Cesar Quintana</h4>
-              <p className="text-gray-600">CEO & Fundador</p>
+          {loading ? (
+            <div className="text-center text-gray-500">Cargando equipo...</div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+              {teamMembers.map((member) => (
+                <div key={member.id} className="flex flex-col items-center">
+                  <img src={member.avatar_url || '/assets/13014933.png'} alt={member.full_name} className="w-32 h-32 rounded-full object-cover mb-4 shadow-md" />
+                  <h4 className="text-xl font-semibold text-gray-800">{member.full_name}</h4>
+                  <p className="text-gray-600">{member.role}</p>
+                </div>
+              ))}
             </div>
-            <div className="flex flex-col items-center">
-              <img src="/assets/13014933.png" alt="Miembro del equipo" className="w-32 h-32 rounded-full object-cover mb-4 shadow-md" />
-              <h4 className="text-xl font-semibold text-gray-800">Alison Quintana</h4>
-              <p className="text-gray-600">CTO</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <img src="/assets/13014933.png" alt="Miembro del equipo" className="w-32 h-32 rounded-full object-cover mb-4 shadow-md" />
-              <h4 className="text-xl font-semibold text-gray-800">Mia Oxcenford</h4>
-              <p className="text-gray-600">Jefe de Desarrollo GIS</p>
-            </div>
-          </div>
+          )}
         </motion.section>
       </div>
     </motion.div>

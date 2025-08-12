@@ -1,11 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion'; // Importar AnimatePresence
-import { MessageSquare, Facebook, Instagram, X } from 'lucide-react';
+import { MessageSquare, Facebook, Instagram, X, Bot, User } from 'lucide-react';
 import TikTokIcon from './icons/TikTokIcon'; // Importar el nuevo icono
 import WhatsAppIcon from './icons/WhatsAppIcon'; // Importar el icono de WhatsApp
+import ReactMarkdown from 'react-markdown'; // Importar la librería para renderizar Markdown
+import { supabase } from '../utils/supabaseClient';
 
 const FloatingButtons = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
+  // Estado para manejar el historial de la conversación
+  const [messages, setMessages] = useState([
+    {
+      role: 'assistant',
+      content: '¡Hola! Soy el asistente virtual de IQ GeoSpatial. ¿En qué puedo ayudarte hoy?'
+    }
+  ]);
+  const [input, setInput] = useState('');
+  const [isBotReplying, setIsBotReplying] = useState(false);
+  const chatContainerRef = useRef(null);
 
   const socialLinks = [
     { name: 'WhatsApp', icon: WhatsAppIcon, color: 'bg-green-500', hoverColor: 'hover:bg-green-600', link: 'https://wa.me/51900102921' },
@@ -24,6 +36,62 @@ const FloatingButtons = () => {
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
+  };
+
+  // Efecto para desplazar el chat hacia abajo con cada nuevo mensaje
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
+    if (!input.trim() || isBotReplying) return;
+
+    const userMessage = { role: 'user', content: input };
+    const newMessages = [...messages, userMessage];
+    setMessages(newMessages);
+    setInput('');
+    setIsBotReplying(true);
+
+    try {
+      const functionName = 'chat';
+      // Llama a la función Edge de Supabase
+      const { data, error } = await supabase.functions.invoke(functionName, {
+        body: { messages: newMessages },
+        // ¡Esta es la corrección clave! Forzamos el uso de la 'anon key' para la autorización.
+        // Las Edge Functions por defecto requieren esto, no el token de un usuario logueado.
+        headers: {
+          'Authorization': `Bearer ${supabase.supabaseKey}`
+        }
+      });
+
+      if (error) throw new Error(error.message); // Captura errores de red o del servidor
+      if (data.error) throw new Error(data.error); // Captura errores lógicos devueltos por la función
+
+      const botMessage = { role: 'assistant', content: data.reply };
+      setMessages(prevMessages => [...prevMessages, botMessage]);
+
+    } catch (error) {
+      console.error(`Error al invocar la función 'chat':`, error);
+      
+      // Damos un mensaje más útil al usuario dependiendo del error
+      let displayError = 'Lo siento, ocurrió un error inesperado. Por favor, intenta más tarde.';
+      if (error.message.includes('Failed to fetch')) {
+        displayError = 'No se pudo conectar con el servidor. Revisa tu conexión a internet.';
+      } else if (error.message) {
+        // Si el error viene de nuestra función, mostramos un mensaje más específico.
+        displayError = `Error del asistente: ${error.message}`;
+      }
+      const errorMessage = { 
+        role: 'assistant', 
+        content: displayError
+      };
+      setMessages(prevMessages => [...prevMessages, errorMessage]);
+    } finally {
+      setIsBotReplying(false);
+    }
   };
 
   return (
@@ -72,21 +140,41 @@ const FloatingButtons = () => {
                 <X size={20} />
               </button>
             </div>
-            <div className="flex-grow p-4 overflow-y-auto text-gray-700">
-              <p className="mb-2">¡Hola! ¿En qué puedo ayudarte hoy?</p>
-              <p className="mb-2">Soy un chatbot de ejemplo. Aquí iría la interfaz real de tu chatbot.</p>
-              {/* Aquí irían los mensajes del chat */}
+            <div ref={chatContainerRef} className="flex-grow p-4 overflow-y-auto space-y-4">
+              {messages.map((msg, index) => (
+                <div key={index} className={`flex items-start gap-2.5 ${msg.role === 'user' ? 'justify-end' : ''}`}>
+                  {msg.role === 'assistant' && <div className="p-2 bg-gray-200 rounded-full"><Bot size={16} className="text-gray-600" /></div>}
+                  <div className={`p-3 rounded-lg max-w-[80%] ${msg.role === 'assistant' ? 'bg-gray-100 text-gray-800' : 'bg-blue-600 text-white'}`}>
+                    <div className="prose prose-sm">
+                      <ReactMarkdown>{msg.content}</ReactMarkdown>
+                    </div>
+                  </div>
+                  {msg.role === 'user' && <div className="p-2 bg-gray-200 rounded-full"><User size={16} className="text-gray-600" /></div>}
+                </div>
+              ))}
+              {isBotReplying && (
+                <div className="flex items-start gap-2.5">
+                  <div className="p-2 bg-gray-200 rounded-full"><Bot size={16} className="text-gray-600" /></div>
+                  <div className="p-3 rounded-lg bg-gray-100 text-gray-800">
+                    <div className="flex items-center space-x-1">
+                      <span className="w-2 h-2 bg-gray-400 rounded-full animate-pulse delay-0"></span>
+                      <span className="w-2 h-2 bg-gray-400 rounded-full animate-pulse delay-150"></span>
+                      <span className="w-2 h-2 bg-gray-400 rounded-full animate-pulse delay-300"></span>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="p-4 border-t border-gray-200">
+            <form onSubmit={handleSendMessage} className="p-4 border-t border-gray-200">
               <input
                 type="text"
                 placeholder="Escribe tu mensaje..."
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                disabled={isBotReplying}
+                className={`w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${isBotReplying ? 'bg-gray-100 cursor-not-allowed' : 'bg-white'}`}
               />
-              <button className="mt-2 w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition-colors">
-                Enviar
-              </button>
-            </div>
+            </form>
           </motion.div>
         )}
       </AnimatePresence>

@@ -4,6 +4,7 @@ import { Download, Book, PlayCircle, Code } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth'; // Importar hook de autenticación
 import { supabase } from '../utils/supabaseClient';
+import SkeletonCard from '../components/common/SkeletonCard'; // Importar el componente de esqueleto
 
 const Software = () => {
   const [softwareList, setSoftwareList] = useState([]);
@@ -47,7 +48,11 @@ const Software = () => {
       </p>
 
       {loading ? (
-        <div className="text-center text-gray-500">Cargando software...</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[...Array(3)].map((_, i) => (
+            <SkeletonCard key={i} />
+          ))}
+        </div>
       ) : (
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
